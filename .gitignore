@@ -120,6 +120,9 @@ env.bak/
 venv.bak/
 pythonenv*
 
+# Config file with secrets
+config.json
+
 # Spyder project settings
 .spyderproject
 .spyproject
