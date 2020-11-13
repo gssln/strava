@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,windows
 
 strava_token.json
+config.json
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -119,9 +120,6 @@ ENV/
 env.bak/
 venv.bak/
 pythonenv*
-
-# Config file with secrets
-config.json
 
 # Spyder project settings
 .spyderproject
