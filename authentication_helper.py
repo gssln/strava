@@ -2,13 +2,24 @@ import requests
 import json
 import time
 
-####### Constants
+code = ""
 client_id = ""
 client_secret = ""
 token_file_name = "strava_token.json"
-###
+
+def configure_strava(configs):
+    global client_id, client_secret, code
+    client_id = configs["config"]["strava_client_id"]
+    client_secret = configs["config"]["strava_client_secret"]
+    code = configs["config"]["strava_code"]
+    return
+    
 
 def get_strava_token(code):
+    if not client_id or not client_secret or not code:
+        print("Strava authentication is not properly configured.")
+        return None
+
     response = requests.post(
         url = 'https://www.strava.com/oauth/token',
         data = {
@@ -22,6 +33,10 @@ def get_strava_token(code):
     return response
 
 def get_strava_refresh_token(refresh_token):
+    if not client_id or not client_secret:
+        print("Strava authentication is not properly configured.")
+        return None
+
     print("Acquire token with: " + refresh_token)
     response = requests.post(
     url = 'https://www.strava.com/oauth/token',
@@ -52,7 +67,11 @@ def get_token_from_file():
 def is_token_expired(token):
     return token['expires_at'] < time.time()
 
-def get_token(code):
+def get_token():
+    if not client_id or not client_secret or not code:
+        print("Strava authentication is not properly configured.")
+        return None
+
     token = get_token_from_file()
 
     if token is None:
