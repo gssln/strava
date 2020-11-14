@@ -1,0 +1,11 @@
+{
+    "config":
+    {
+        "strava_client_id" : "",
+        "strava_client_secret" : "",
+        "strava_code" : "",
+        "adidas_workout_folder" : ""
+    }
+}
+
+

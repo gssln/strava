@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,windows
 
 strava_token.json
+config.json
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

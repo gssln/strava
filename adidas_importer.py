@@ -8,13 +8,16 @@ import activity_helper
 ####### Get strava code to fetch token
 # 1. http://www.strava.com/oauth/authorize?client_id=55268&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=profile:read_all,activity:read_all,activity:write"
 # 2. Authorize
-
 url = "https://www.strava.com/api/v3/activities"
-code = ""
-folder = ""
+
+with open("config.json") as config_file:
+    configs = json.load(config_file)
+
+auth.configure_strava(configs)
+folder = configs["config"]["adidas_workout_folder"]
 
 ### Get access token for strava
-access_token = auth.get_token(code)['access_token']
+access_token = auth.get_token()['access_token']
 os.system('color')
 all_activities = activity_helper.get_files_from_folder(folder)
 
