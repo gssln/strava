@@ -5,7 +5,7 @@ Import Adidas workouts to Strava using Adidas exported data.
 
 ## Export Adidas/Runtastic workout data
 1. Navigate to `https://www.runtastic.com/` and log in
-2. Got to the settings and export your data. Note that you may have to wait a couple of days before your data is available
+2. Go to the settings and export your data. Note that you may have to wait a couple of days before your data is available
 
 ## Strava authentication
 
