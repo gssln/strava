@@ -1,14 +1,16 @@
-import requests
-import json
 import os
+import json
+import requests
 from termcolor import colored
 import authentication_helper as auth
 import activity_helper
 
 ####### Get strava code to fetch token
-# 1. http://www.strava.com/oauth/authorize?client_id=55268&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=profile:read_all,activity:read_all,activity:write"
+# 1. http://www.strava.com/oauth/authorize?client_id=55268&response_type=code&redirect_uri=
+#       http://localhost/exchange_token&approval_prompt=force
+#       &scope=profile:read_all,activity:read_all,activity:write"
 # 2. Authorize
-url = "https://www.strava.com/api/v3/activities"
+URL = "https://www.strava.com/api/v3/activities"
 
 with open("config.json") as config_file:
     configs = json.load(config_file)
@@ -37,14 +39,15 @@ for index, activity_file in enumerate(all_activities):
 
     ### Create activity
     response = requests.post(
-        url = url,
+        url = URL,
         params = params
     )
 
     detailed_activity = json.loads(response.text)
 
     if response.status_code == 201:
-        print(colored("\tActivity was created successfully. Strava activity id: {}\n", "green").format(detailed_activity['id']))
+        print(colored("\tActivity was created successfully. Strava activity id: {}\n", "green")
+            .format(detailed_activity['id']))
     elif response.status_code == 409:
         print(colored("\tActivity already exists in Strava. Skipping ...\n", "yellow"))
     else:
