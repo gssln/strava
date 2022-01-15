@@ -2,7 +2,7 @@ import os
 import json
 import requests
 from termcolor import colored
-import authentication_helper as auth
+from authentication_helper import StravaAuth
 import activity_helper
 
 ####### Get strava code to fetch token
@@ -15,6 +15,7 @@ URL = "https://www.strava.com/api/v3/activities"
 with open("config.json") as config_file:
     configs = json.load(config_file)
 
+auth = StravaAuth()
 auth.configure_strava(configs)
 folder = configs["config"]["adidas_workout_folder"]
 
