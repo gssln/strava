@@ -1,8 +1,12 @@
+""" Module to facilitate Strava authentication"""
+
 import json
 import time
 import requests
 
 class StravaAuth:
+    """ Represents a Strava authentication object and methods """
+    
     def __init__(self):
         self.code = ''
         self.client_id = ''
@@ -15,9 +19,10 @@ class StravaAuth:
         self.code = configs["config"]["strava_code"]
         return
 
-
     def get_strava_token(self):
-        if not self.client_id or not self.client_secret or not self.code:
+        """ Get token using Strava configs and manually acquired code. """
+        
+        if self.is_configured() is False:
             print("Strava authentication is not properly configured.")
             return None
 
@@ -34,7 +39,9 @@ class StravaAuth:
         return response
 
     def get_strava_refresh_token(self, refresh_token):
-        if not self.client_id or not self.client_secret:
+        """ Get refresh token using refresh token field on previous saved token. """
+        
+        if self.is_configured() is False:
             print("Strava authentication is not properly configured.")
             return None
 
@@ -65,18 +72,27 @@ class StravaAuth:
 
         return strava_token
 
+    def is_configured(self):
+        return self.client_id and self.client_secret and self.code
+
     def is_token_expired(self, token):
         return token['expires_at'] < time.time()
 
     def get_token(self):
-        if not self.client_id or not self.client_secret or not self.code:
+        """ Public method to get Strava authentication token
+
+        Returns:
+            [JWT]: JSON web token
+        """
+        if self.is_configured() is False:
             print("Strava authentication is not properly configured.")
             return None
 
+        # Try to get token from previously saved file
         token = self.get_token_from_file()
 
         if token is None:
-            print("File does not contain token or does not exists.")
+            print("File does not contain token or token does not exist.")
             response = self.get_strava_token()
 
             if response.ok:
@@ -84,7 +100,7 @@ class StravaAuth:
                 self.save_token_to_file(response.json())
                 return response.json()
             else:
-                print("There was a problem acquiring a refresh token.")
+                print("There was a problem acquiring a token.")
                 response.raise_for_status()
         elif self.is_token_expired(token):
             print("Token is expired.")
