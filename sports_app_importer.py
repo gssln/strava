@@ -18,7 +18,7 @@ def fitnotes2strava(token, fitnotes_folder):
     all_fitnotes_activities = get_fitnotes_activities(fitnotes_folder)
 
     for fitnotes_act in all_fitnotes_activities:
-        strava_act = fitnotes_act.convert_to_strava_activity()       
+        strava_act = fitnotes_act.convert_to_strava_activity()
         upload_to_strava(token, strava_act)
 
 
