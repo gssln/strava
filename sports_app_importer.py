@@ -1,3 +1,5 @@
+"""Module used to import activities that lack strava upload functionality"""
+
 import json
 import os
 import requests
@@ -7,14 +9,28 @@ from file_readers.fitnotes_reader import get_fitnotes_activities
 from helpers.authentication_helper import StravaAuth
 
 def adidas2strava(token, adidas_folder):
+    """
+    Takes in a file and x-forms all adidas activities to strava activities and uploads all
+
+    Args:
+        token: strava token
+        adidas_folder (str) : folder containing csv file
+    """
+
     all_adidas_activities = get_adidas_activities(adidas_folder)
 
     for adidas_act in all_adidas_activities:
         strava_act = adidas_act.convert_to_strava_activity()
         upload_to_strava(token, strava_act)
 
-
 def fitnotes2strava(token, fitnotes_folder):
+    """
+    Takes in a file and x-forms all fitnotes activities to strava activities and uploads all
+
+    Args:
+        token: strava token
+        fitnotes_folder (str) : folder containing csv file
+    """
     all_fitnotes_activities = get_fitnotes_activities(fitnotes_folder)
 
     for fitnotes_act in all_fitnotes_activities:
@@ -22,8 +38,9 @@ def fitnotes2strava(token, fitnotes_folder):
         upload_to_strava(token, strava_act)
 
 
-
 def upload_to_strava(token, activity):
+    """Helper function that uploads a strava activity"""
+
     params = activity.__dict__
     params['access_token'] = token
 
@@ -75,7 +92,7 @@ print('')
 print('1. Adidas')
 print('\t> Exported workout data (keep original folder structure)')
 print('2. FitNotes')
-print('\t > Exported workout data (as CSV)')
+print('\t> Exported workout data (as CSV)')
 print('')
 
 user_choice = input('Which app data needs to be imported to Strava?\n')
